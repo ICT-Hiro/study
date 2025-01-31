@@ -1,0 +1,32 @@
+<html>
+<head>
+
+</head>
+<body>
+
+</body>
+
+<script>
+
+window.onload = function() {
+  html = new URLSearchParams(location.search).get("html");
+  css = new URLSearchParams(location.search).get("css");
+  js = new URLSearchParams(location.search).get("js");
+  
+  html!=null ? document.body.innerHTML += html:console.log(`No HTML`);
+  css != null ? document.getElementsByTagName('style')[0].innerHTML += css:console.log(`No CSS`);
+  js !=null ? document.getElementsByTagName('script')[1].innerHTML += "\n"+js:console.log(`No JS`);
+  eval(js);
+}
+
+</script>
+<script>
+//自動挿入プログラム
+/* 本プログラムは、ユーザによって挿入されたものです。使用には十分注意すること。
+------------
+*/
+</script>
+
+<style></style>
+
+<html>
