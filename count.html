@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カウントダウン</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .countdown {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        .countdown span {
+            font-weight: bold;
+            color: red;
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">タイトル</h1>
+        <p id="subtitle"></p>
+        <p class="countdown"><span id="days"></span>日 !</p>
+    </div>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                content: params.get('content') || 'イベント',
+                date: params.get('date') || '',
+                theme: params.get('theme') || 'blue'
+            };
+        }
+
+        function calculateDays(targetDate) {
+            const today = new Date();
+            const eventDate = new Date(targetDate);
+            const diffTime = eventDate - today;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        function setThemeColor(theme) {
+            const themes = {
+                red: 'linear-gradient(135deg, #ff9a9e, #fad0c4)',
+                blue: 'linear-gradient(135deg, #a1c4fd, #c2e9fb)',
+                green: 'linear-gradient(135deg, #d4fc79, #96e6a1)',
+                purple: 'linear-gradient(135deg, #d8a7ff, #fbc2eb)',
+                orange: 'linear-gradient(135deg, #ff9a8b, #ff6a88)'
+            };
+            document.body.style.background = themes[theme] || themes.blue;
+        }
+
+        function updateCountdown() {
+            const { content, date, theme } = getQueryParams();
+            document.getElementById('title').innerText = content;
+            document.getElementById('subtitle').innerText = `${content}まであと、`;
+            setThemeColor(theme);
+            if (date) {
+                const daysRemaining = calculateDays(date);
+                document.getElementById('days').innerText = daysRemaining;
+            } else {
+                document.getElementById('days').innerText = '???';
+            }
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>
